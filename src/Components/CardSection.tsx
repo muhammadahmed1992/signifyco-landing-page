@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import '../app/globals.css';
+import AnimateWhenInViewport from './AnimateWhenInViewport';
 
 const CardSection: React.FC = () => {
     const elementIsVisibleInViewport = (el: HTMLElement): boolean => {
@@ -55,8 +56,12 @@ const CardSection: React.FC = () => {
                         <div className="description-lines">simplifies complexity, accelerates capacity, and improves outcomes.</div>
                     </div>
                     <div className="section-title">
-                        <div className="title-lines">WE DO A LOT!</div>
-                        <div className="title-lines">OF COOOOL</div>
+                    <AnimateWhenInViewport 
+                        textToBeAnimated="WE DO A LOT!" 
+                        cssClass="title-lines" />
+                    <AnimateWhenInViewport 
+                        textToBeAnimated="OF COOOOL" 
+                        cssClass="title-lines" />
                     </div>
                     <div className="button">
                         <div className="button-text">Contact</div>
