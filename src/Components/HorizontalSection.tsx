@@ -82,16 +82,16 @@ const HorizontalSection: React.FC = () => {
               </div>
               <div className="horizontal-imgs">
                 <div className="horizontal-img-cont1">
-                  <Image src={dog} alt="" />
+                  <Image className="h-[150px] w-[200px]" src={dog} alt="" />
                 </div>
                 <div className="horizontal-img-cont2">
-                  <Image src={manMountain} alt="" />
+                  <Image className="h-[150px] w-[200px]" src={manMountain} alt="" />
                 </div>
                 <div className="horizontal-img-cont3">
-                  <Image src={Miami} alt="" />
+                  <Image className="h-[150px] w-[200px]" src={Miami} alt="" />
                 </div>
                 <div className="horizontal-img-cont4">
-                  <Image src={peoples} alt="" />
+                  <Image className="h-[150px] w-[200px]" src={peoples} alt="" />
                 </div>
               </div>
             </div>
@@ -130,9 +130,9 @@ const HorizontalSection: React.FC = () => {
                 <div className="hori-f2">AND ENABLE YOU FOR YOUR CRAZIEST IDEA YET</div>
               </div>
               <div className="horizontal-btn2">
-                <div className="button">
+                <div className="button !w-[240px]">
                   <div className="button-text">Create With Us</div>
-                  <img className="button-arrow" src="assets/SVG.png" alt="" />
+                  <Image className="button-arrow" src={SVG} alt="" />
                 </div>
               </div>
             </div>

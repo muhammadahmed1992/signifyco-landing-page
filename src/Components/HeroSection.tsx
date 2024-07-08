@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import "../app/globals.css";
+import AnimatedButton from "./AnimatedButton";
+import AnimateWhenInViewport from "./AnimateWhenInViewport";
+import GhamzaLogo from "./GhmzaLogo";
 
 const HeroSection: React.FC = () => {
   const scrollHeroSectionRef = useRef<HTMLDivElement>(null);
@@ -153,7 +156,7 @@ const HeroSection: React.FC = () => {
     <header className="hero-container" ref={scrollHeroSectionRef}>
       <div className="sticky hero">
         <div className="video-container" ref={videoContainerRef} style={{ clipPath: "circle(100%)" }}>
-          <video className=" w-[100%] h-screen lg:h-auto object-cover" autoPlay muted loop playsInline>
+          <video className=" w-[100%] h-[100vh]  object-cover" autoPlay muted loop playsInline>
             <source src="https://cdn.significo.com/videos/significo-main-hero.mp4" type="video/mp4" />
           </video>
         </div>
@@ -204,7 +207,7 @@ const HeroSection: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="hero-row-parent pt-[60px] lg:pt-[80px]" ref={heroRowsParentRef}>
+          <div className="hero-row-parent pt-[60px] lg:pt-[40px]" ref={heroRowsParentRef}>
             <div className="hero-rows" ref={heroRowsChild}>
               <div className="hero-row">
                 <div className="hero-row-text">CRAZY</div>
@@ -280,13 +283,18 @@ const HeroSection: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="hero-bottom invisible">
+          <div className="hero-bottom !w-full mt-10">
             <div className="scroll-arrow" style={{ width: "40%" }}>
               <img src="" alt="" />
               Scroll
             </div>
-            <div className="gif-container" style={{ width: "40%" }}>
-              <img src="" alt="gif" />
+            <div>
+              <div className="block md:hidden ">
+                <GhamzaLogo height="65" width="65" />
+              </div>
+              <div className="md:block hidden ">
+                <GhamzaLogo height="120" width="120" />
+              </div>
             </div>
           </div>
         </div>
