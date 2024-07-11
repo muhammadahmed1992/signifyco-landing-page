@@ -102,7 +102,7 @@ const CardSection = forwardRef<HTMLDivElement>((props, ref) => {
       <div className="hidden lg:block">
         <div className="container flex flex-col lg:flex-row lg:justify-between ">
           <div
-            style={{ position: "sticky", top: "0", height: "50vh" }}
+            style={{ position: "sticky", top: "0", height: "100vh" }}
             className="max-w-[37.2rem] gap-x-[6.25rem] gap-y-[1.67rem] flex flex-col items-start justify-items-center pb-24"
           >
             <div className="section-description">
@@ -136,7 +136,7 @@ const CardSection = forwardRef<HTMLDivElement>((props, ref) => {
           </div>
           {/* card list  */}
           <div
-            className="hidden lg:flex lg:flex-col lg:pt-[38.57rem] lg:pb-[22.09rem]"
+            className="hidden lg:flex lg:flex-col lg:pt-[36.57rem] lg:pb-[22.09rem]"
             ref={cardsListRef}
           >
             <div className="px-10 py-5 h-[213px] w-[95%] lg:w-[31.25rem] border border-solid rounded-[10px] bg-[#df1780] mt-[5%] mb-[5%] flex flex-row items-center justify-between transition-all duration-500 ease-in-out">
