@@ -1,167 +1,76 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../app/globals.css";
-import AnimatedButton from "./AnimatedButton";
-import AnimateWhenInViewport from "./AnimateWhenInViewport";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import GhamzaLogo from "./GhmzaLogo";
-import ScrollToSection from "./ScrollToSection.js";
+import Image from "next/image";
+import { arrowDown } from "public/images/assets";
 
-const HeroSection: React.FC = () => {
+const HeroTest: React.FC = () => {
   const scrollHeroSectionRef = useRef<HTMLDivElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
-  const heroRowsParentRef = useRef<HTMLDivElement>(null);
   const heroSectionContainerRef = useRef<HTMLDivElement>(null);
   const linesRef = useRef<HTMLDivElement>(null);
-  const heroRowsChild = useRef<HTMLDivElement>(null);
 
-  // Constants and state for animation properties
-  const maxClippingValue = 90;
-  const maxScaleValue = 20;
-  const minClippingValue = 0;
-  const minScaleValue = 1;
-  let clipPercentage = 100;
-  let scalePercentage = 20;
-  let videoContainerOpacity = 1;
+  const { scrollYProgress } = useScroll();
 
-  // Map for xTranslationRanges
-  const xTranslationRanges = new Map<number, number>([
-    [0, 10],
-    [1, -6],
-    [2, 7],
-    [3, -9],
-  ]);
+  const scale = useTransform(scrollYProgress, [0, 0.1], [20, 1]);
+  const scaleValue = useSpring(scale, { stiffness: 100, damping: 20 });
 
-  // Function to handle scroll and touch events
-  const handleScroll = () => {
-    handleHeroScroll();
-  };
+  const clipPath = useTransform(scrollYProgress, [0, 0.1], ["circle(100%)", "circle(0%)"]);
 
-  // Effect hook to add event listeners
+  const translateX1 = useTransform(scrollYProgress, [0, 0.3], [0, 150]);
+  const translateX2 = useTransform(scrollYProgress, [0, 0.3], [0, -150]);
+  const translateX3 = useTransform(scrollYProgress, [0, 0.3], [0, 150]);
+  const translateX4 = useTransform(scrollYProgress, [0, 0.3], [0, -150]);
+
+  const x1 = useSpring(translateX1, { stiffness: 100, damping: 20 });
+  const x2 = useSpring(translateX2, { stiffness: 100, damping: 20 });
+  const x3 = useSpring(translateX3, { stiffness: 100, damping: 20 });
+  const x4 = useSpring(translateX4, { stiffness: 100, damping: 20 });
+
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("touchmove", handleScroll);
+    scrollYProgress.onChange((latest) => {
+      scrollHeroSectionRef?.current?.classList.add("bg-black");
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("touchmove", handleScroll);
-    };
-  }, []);
-
-  // Function to handle scrolling animation
-  const handleHeroScroll = () => {
-    // Check if all necessary refs are available
-    if (
-      !scrollHeroSectionRef.current ||
-      !heroSectionContainerRef.current ||
-      !videoContainerRef.current ||
-      !heroRowsParentRef.current ||
-      !linesRef.current
-    )
-      return;
-
-    const headerSection = {
-      start: 0,
-      end: scrollHeroSectionRef.current.offsetHeight,
-    };
-    const clippingAnimationSection = {
-      start: 0,
-      end: headerSection.end * 0.55,
-    };
-    const heroRowAnimationSection = {
-      start: clippingAnimationSection.end + 1,
-      end: (headerSection.end - window.innerHeight) * 0.9,
-    };
-
-    const getCurrentSection = (currentScrollPosition: number) => {
-      const currentSection = {
-        clippingAnimationSection: false,
-        heroRowAnimationSection: false,
-        outsideHeader: false,
-      };
-      if (currentScrollPosition >= headerSection.end) {
-        currentSection.outsideHeader = true;
-      } else if (
-        currentScrollPosition >= clippingAnimationSection.start &&
-        currentScrollPosition <= clippingAnimationSection.end
-      ) {
-        currentSection.clippingAnimationSection = true;
-      } else if (
-        currentScrollPosition >= heroRowAnimationSection.start &&
-        currentScrollPosition <= heroRowAnimationSection.end * 1.1
-      ) {
-        currentSection.heroRowAnimationSection = true;
-      } else {
-        currentSection.outsideHeader = true;
-      }
-      return currentSection;
-    };
-
-    const currentScrollTop =
-      window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-
-    if (heroSectionContainerRef.current.classList.contains("hide")) {
-      heroSectionContainerRef.current.classList.remove("hide");
-    }
-    const currentSection = getCurrentSection(currentScrollTop);
-    if (currentSection.outsideHeader) {
-      scalePercentage = minScaleValue;
-      clipPercentage = minClippingValue;
-    } else if (currentSection.clippingAnimationSection) {
-      clipPercentage =
-        maxClippingValue - (currentScrollTop / clippingAnimationSection.end) * maxClippingValue;
-      scalePercentage = minScaleValue + (clipPercentage / maxClippingValue) * maxScaleValue;
-      videoContainerOpacity = clipPercentage < 1.4 ? videoContainerOpacity / 2 : 1;
-    } else if (currentSection.heroRowAnimationSection) {
-      scalePercentage = minScaleValue;
-      clipPercentage = minClippingValue;
-      let index = 0;
-      const heroRows = heroRowsChild!.current?.childNodes!;
-      for (let [index, row] of Array.from(heroRows.entries())) {
-        const translationRange = xTranslationRanges.get(index)!;
-        const xTranslationPosition =
-          Math.min(
-            (currentScrollTop - heroRowAnimationSection.start) /
-              (heroRowAnimationSection.end - heroRowAnimationSection.start),
-            1
-          ) * translationRange;
-        (row as HTMLElement).style.transform = `translateX(${xTranslationPosition}%)`;
-        index++;
-      }
-
-      const scrollPercentage = Math.min(
-        (currentScrollTop - heroRowAnimationSection.start) /
-          (heroRowAnimationSection.end - heroRowAnimationSection.start),
-        1
-      );
-
-      let oneOpacityCount = 0;
-      const spans = Array.from(linesRef.current.querySelectorAll("span"));
-      spans.forEach((span, index) => {
-        let opacity = scrollPercentage - (index - oneOpacityCount) * 0.02;
-        opacity = Math.max(opacity, 0);
-        if (opacity >= 1) {
-          oneOpacityCount++;
+      if (latest >= 0.04955614068083505) {
+        if (heroSectionContainerRef?.current?.classList.contains("hide")) {
+          heroSectionContainerRef?.current?.classList.remove("hide");
+          heroSectionContainerRef?.current?.classList.add("z-30");
         }
-        span.style.opacity = opacity.toString();
-      });
-    } else {
-      scalePercentage = maxScaleValue;
-      clipPercentage = maxClippingValue;
-    }
-
-    videoContainerRef.current.style.clipPath = `circle(${clipPercentage}%)`;
-    heroRowsParentRef.current.style.transform = `scale(${scalePercentage})`;
-    videoContainerRef.current.style.opacity = `${videoContainerOpacity}`;
-  };
+        let oneOpacityCount = 0;
+        const spans = Array.from(linesRef?.current?.querySelectorAll("span") || []);
+        spans.forEach((span, index) => {
+          let opacity = latest * 9 - (index - oneOpacityCount) * 0.002;
+          opacity = Math.max(opacity, 0);
+          if (opacity >= 1) {
+            oneOpacityCount++;
+          }
+          span.style.opacity = opacity.toString();
+        });
+      } else {
+        if (!heroSectionContainerRef?.current?.classList.contains("hide")) {
+          heroSectionContainerRef?.current?.classList.add("hide");
+          heroSectionContainerRef?.current?.classList.remove("z-30");
+        }
+      }
+    });
+  }, [scrollYProgress]);
 
   return (
     <header className="hero-container" ref={scrollHeroSectionRef}>
       <div className="sticky hero">
-        <div className="video-container" ref={videoContainerRef} style={{ clipPath: "circle(100%)" }}>
-          <video className=" w-[100%] h-[100vh]  object-cover" autoPlay muted loop playsInline>
+        <motion.div
+          className="video-container"
+          ref={videoContainerRef}
+          style={{
+            clipPath: clipPath,
+          }}
+        >
+          <video className="w-[100%] h-[100vh] object-cover" autoPlay muted loop playsInline>
             <source src="https://cdn.significo.com/videos/significo-main-hero.mp4" type="video/mp4" />
           </video>
-        </div>
-        <div className="centered-div hide" ref={heroSectionContainerRef}>
+        </motion.div>
+        <div className="centered-div z-10 hide" ref={heroSectionContainerRef}>
           <div className="hero-subtitle">
             <div className="f-24">
               <div className="subtitle-text">
@@ -208,9 +117,9 @@ const HeroSection: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="hero-row-parent pt-[60px] lg:pt-[40px]" ref={heroRowsParentRef}>
-            <div className="hero-rows" ref={heroRowsChild}>
-              <div className="hero-row">
+          <motion.div style={{ scale }} className="hero-row-parent pt-[20px] lg:pt-[40px]">
+            <div className="hero-rows">
+              <motion.div style={{ x: x1 }} className="hero-row">
                 <div className="hero-row-text">CRAZY</div>
                 <div className="circle-container">
                   <div className="circle"></div>
@@ -227,8 +136,8 @@ const HeroSection: React.FC = () => {
                 <div className="circle-container">
                   <div className="circle"></div>
                 </div>
-              </div>
-              <div className="hero-row">
+              </motion.div>
+              <motion.div style={{ x: x2 }} className="hero-row">
                 <div className="hero-row-text">LOWKEY</div>
                 <div className="circle-container">
                   <div className="circle"></div>
@@ -245,8 +154,8 @@ const HeroSection: React.FC = () => {
                 <div className="circle-container">
                   <div className="circle"></div>
                 </div>
-              </div>
-              <div className="hero-row">
+              </motion.div>
+              <motion.div style={{ x: x3 }} className="hero-row">
                 <div className="hero-row-text">CRAZY</div>
                 <div className="circle-container">
                   <div className="circle"></div>
@@ -263,8 +172,8 @@ const HeroSection: React.FC = () => {
                 <div className="circle-container">
                   <div className="circle"></div>
                 </div>
-              </div>
-              <div className="hero-row">
+              </motion.div>
+              <motion.div style={{ x: x4 }} className="hero-row">
                 <div className="hero-row-text">LOWKEY</div>
                 <div className="circle-container">
                   <div className="circle"></div>
@@ -281,20 +190,24 @@ const HeroSection: React.FC = () => {
                 <div className="circle-container">
                   <div className="circle"></div>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
-          <div className="hero-bottom !w-full mt-10">
-            <div className="scroll-arrow" style={{ width: "40%" }}>
-              <img src="" alt="" />
-              Scroll
+          </motion.div>
+          <div className="hero-bottom !w-full mt-3">
+            <div className="text-[35px] lg:text-[48px] text-white flex" style={{ width: "40%" }}>
+              <Image height={20} className="bg-white mr-2" src={arrowDown} alt="" /> Scroll
             </div>
             <div>
               <div className="block md:hidden ">
                 <GhamzaLogo height="65" width="65" />
               </div>
-              <div className="md:block hidden ">
-                <GhamzaLogo height="120" width="120" />
+              <div className=" hidden sm:block">
+                <div className="block md:hidden ">
+                  <GhamzaLogo height="65" width="65" />
+                </div>
+                <div className="md:block hidden ">
+                  <GhamzaLogo height="120" width="120" />
+                </div>
               </div>
             </div>
           </div>
@@ -304,4 +217,4 @@ const HeroSection: React.FC = () => {
   );
 };
 
-export default HeroSection;
+export default HeroTest;

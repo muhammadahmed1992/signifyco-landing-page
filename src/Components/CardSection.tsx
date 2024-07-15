@@ -8,6 +8,8 @@ import CardHorizontal from "./CardHorizontal";
 
 const elementIsVisibleInViewport = (el: HTMLElement): boolean => {
   const { top } = el.getBoundingClientRect();
+  console.log(top);
+
   const { innerHeight } = window;
 
   return top < innerHeight - top;

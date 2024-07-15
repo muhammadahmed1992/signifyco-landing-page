@@ -15,7 +15,7 @@ const AnimatedButton: React.FC<AnimatedButtonProps> = ({ text, customCssStyles, 
 
   return (
     <button
-      className="animated-button text-center"
+      className="animated-button "
       style={customCssStyles}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
