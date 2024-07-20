@@ -52,12 +52,12 @@ const HeroTest: React.FC = () => {
 
     scrollYProgress.onChange((latest) => {
       // scrollHeroSectionRef?.current?.classList.add("bg-black");
-      if (latest >= 0.07955614068083505) {
+      if (latest >= 0.09) {
         const spans = Array.from(linesRef?.current?.querySelectorAll("span") || []);
-        const scrollPercent = Math.min((latest - 0.07955614068083505) / (0.15 - 0.07955614068083505), 1);
+        const scrollPercent = Math.min((latest - 0.09) / (0.15 - 0.09), 2);
         let oneOpacityCount = 0;
         spans.forEach((span, index) => {
-          let opacity = scrollPercent - (index - oneOpacityCount) * 0.02;
+          let opacity = scrollPercent - (index) * 0.02;
           opacity = Math.max(opacity, 0);
           if (opacity >= 1) {
             oneOpacityCount++;
