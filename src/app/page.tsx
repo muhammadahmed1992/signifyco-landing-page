@@ -1,6 +1,6 @@
 "use client";
 import twitterLogo from "../assets/twitterLogo.png";
-import { motion } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import TeamInformation from "@/Components/TeamInformation";
 import Card from "../Components/SocialPostsCardView";
 import rectangle from "../assets/bgImage.png";
@@ -96,6 +96,35 @@ const cardItems = [
 export default function Home() {
   const [hoveredColumn, setHoveredColumn] = useState<number | null>(null);
   const [innerWidth, setInnerWidth] = useState<number | null>(null);
+  const { scrollYProgress } = useScroll();
+  scrollYProgress.on("change", (latest) => {
+    console.log(latest);
+    if (latest < 0.27) {
+      document.body.classList.remove("theme-pink");
+      document.body.classList.remove("theme-light-gray");
+      if (!document.body.classList.contains("theme-black")) {
+        document.body.classList.add("theme-black");
+      }
+    } else if (latest < 0.57) {
+      document.body.classList.remove("theme-pink");
+      document.body.classList.remove("theme-black");
+      if (!document.body.classList.contains("theme-light-gray")) {
+        document.body.classList.add("theme-light-gray");
+      }
+    } else if (latest < 0.8) {
+      document.body.classList.remove("theme-light-gray");
+      document.body.classList.remove("theme-black");
+      if (!document.body.classList.contains("theme-pink")) {
+        document.body.classList.add("theme-pink");
+      }
+    } else {
+      document.body.classList.remove("theme-pink");
+      document.body.classList.remove("theme-black");
+      if (!document.body.classList.contains("theme-light-gray")) {
+        document.body.classList.add("theme-light-gray");
+      }
+    }
+  });
   useEffect(() => {
     setInnerWidth(window?.innerWidth);
   }, []);
@@ -112,7 +141,7 @@ export default function Home() {
         <HorizontalSection />
       </div>
       <div>
-        <section className="bg-[#D9D9D9] pt-2">
+        <section className="pt-2">
           <div className="flex justify-center py-5">
             <AnimateWhenInViewport
               textToBeAnimated="ALL THAT WE DID!!!"

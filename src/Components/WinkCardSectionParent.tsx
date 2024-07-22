@@ -16,20 +16,20 @@ const ParentComponent: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (winkSectionRef.current && cardSectionRef.current) {
-        const isWinkVisible = elementIsVisibleInViewport(winkSectionRef.current);
-        const isCardVisible = elementIsVisibleInViewport(cardSectionRef.current);
+        // const isWinkVisible = elementIsVisibleInViewport(winkSectionRef.current);
+        // const isCardVisible = elementIsVisibleInViewport(cardSectionRef.current);
 
-        if (isWinkVisible || isCardVisible) {
-          document.body.classList.remove("theme-black");
-          if (!document.body.classList.contains("theme-light-gray")) {
-            document.body.classList.add("theme-light-gray");
-          }
-        } else {
-          document.body.classList.remove("theme-light-gray");
-          if (!document.body.classList.contains("theme-black")) {
-            document.body.classList.add("theme-black");
-          }
-        }
+        // if (isWinkVisible || isCardVisible) {
+        //   document.body.classList.remove("theme-black");
+        //   if (!document.body.classList.contains("theme-light-gray")) {
+        //     document.body.classList.add("theme-black");
+        //   }
+        // } else {
+        //   document.body.classList.remove("theme-light-gray");
+        //   if (!document.body.classList.contains("theme-black")) {
+        //     document.body.classList.add("theme-black");
+        //   }
+        // }
       }
     };
 

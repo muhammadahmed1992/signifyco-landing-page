@@ -4,6 +4,7 @@ import AnimateWhenInViewport from "./AnimateWhenInViewport";
 import { Group, image1, image2, image3, image4 } from "public/images/assets";
 import Image from "next/image";
 import AnimatedButton from "./AnimatedButton";
+import {useScroll} from 'framer-motion'
 import CardHorizontal from "./CardHorizontal";
 
 const elementIsVisibleInViewport = (el: HTMLElement): boolean => {
@@ -12,37 +13,49 @@ const elementIsVisibleInViewport = (el: HTMLElement): boolean => {
 
   const { innerHeight } = window;
 
-  return top < innerHeight - top;
+  return top < innerHeight - top / 1.5;
 };
 
 const CardSection = forwardRef<HTMLDivElement>((props, ref) => {
   const cardsListRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.intersectionRatio >= 0.05) {
-            entry.target.classList.add("card-color-change");
-          } else {
-            entry.target.classList.remove("card-color-change");
-          }
-        });
-      },
-      { threshold: 0.05 }
-    );
-
-    console.log({ observer: observer });
-
-    const cards = cardsListRef.current?.querySelectorAll(".cards-item");
+  const {scrollYProgress} = useScroll();
+  const cards = cardsListRef.current?.querySelectorAll(".cards-item");
+  scrollYProgress.on("change", () => {
     cards?.forEach((card) => {
-      observer.observe(card);
-    });
+        if(elementIsVisibleInViewport(card as HTMLElement)){
+          card.classList.add('card-color-change');
+        }
+        else {
+          card.classList.remove('card-color-change');
+        }
+      });
+  }) 
+  useEffect(() => {
+    // const observer = new IntersectionObserver((entries) => {
+    //   entries.forEach(entry => {
+    //       const { bottom } = entry.boundingClientRect;
+    //       const windowHeight = window.innerHeight;
+    //       const threshold = windowHeight * 0.5; // 25% from bottom
+    //       console.log({bottom, threshold});
+    //       if (bottom > threshold) {
+    //         entry.target.classList.add('card-color-change');
+    //       } else {
+    //         entry.target.classList.remove('card-color-change');
+    //       }
+    //   });
+    // }, {
+    //   threshold: [0, 1.0] // Observing fully visible elements
+    // });
+
+    // console.log({ observer: observer });
+
+    
+    
 
     return () => {
-      cards?.forEach((card) => {
-        observer.unobserve(card);
-      });
+      // cards?.forEach((card) => {
+      //   observer.unobserve(card);
+      // });
     };
   }, []);
   return (
@@ -110,7 +123,7 @@ const CardSection = forwardRef<HTMLDivElement>((props, ref) => {
         </div>
         <div className="hidden lg:flex w-full justify-end">
           <div
-            className="cards-list lg:!flex !flex-row lg:!flex-col !items-center gap-10 lg:gap-0 mr-[90px] !hidden "
+            className="cards-list lg:!flex !flex-row lg:!flex-col !items-center gap-10 lg:gap-5 mr-[90px] !hidden "
             ref={cardsListRef}
           >
             <div className="cards-item ">

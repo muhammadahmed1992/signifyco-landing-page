@@ -175,7 +175,6 @@ const TeamMember: React.FC<TeamMemberProps> = ({ member }) => {
           </div>
           <style jsx>{`
             .team__item {
-              background: #d9d9d9;
               padding: 20px;
               text-align: center;
               cursor: pointer;

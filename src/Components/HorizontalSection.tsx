@@ -13,13 +13,13 @@ import {
   SVGWHITE,
 } from "../../public/images/assets/index";
 import Image from "next/image";
-import { motion, useTransform, useScroll } from "framer-motion";
+import { motion, useTransform, useScroll, transform, useSpring } from "framer-motion";
 import ArrowSVG from "./ArrowSVG";
 
 const HorizontalSection = () => {
   return (
     <div>
-      <HorizontalScrollCarousel />
+      <HorizontalScrollCarousel /> 
     </div>
   );
 };
@@ -44,11 +44,11 @@ const HorizontalScrollCarousel = () => {
       if (targetRef.current) {
         const isHorizontalVisible = elementIsVisibleInViewport(targetRef.current);
 
-        if (isHorizontalVisible) {
-          document.body.classList.add("theme-pink");
-        } else {
-          document.body.classList.remove("theme-pink");
-        }
+        // if (isHorizontalVisible) {
+        //   document.body.classList.add("theme-pink");
+        // } else {
+        //   document.body.classList.remove("theme-pink");
+        // }
       }
     };
 
@@ -136,6 +136,10 @@ const HorizontalScrollCarousel = () => {
   }, [targetRef]);
 
   const x = useTransform(scrollYProgress, [0, 1], ["1%", "-75%"]);
+  const img1X = useTransform(scrollYProgress, [0.2, 1], ["0%", "50%"]);
+  const img2X = useTransform(scrollYProgress, [0.2, 1], ["-75%", "-50%"]);
+  const img3X = useTransform(scrollYProgress, [0.2, 1], ["25%", "-25%"]);
+  const img4X = useTransform(scrollYProgress, [0.2, 1], ["0%", "-50%"]);
 
   return (
     <section ref={targetRef} className="relative h-[400vh]">
@@ -181,23 +185,23 @@ const HorizontalScrollCarousel = () => {
               </div>
             </div>
             <div className="horizontal-imgs">
-              <div className="horizontal-img-cont1 absolute top-[90px] -right-[30px] hidden lg:block">
+              <motion.div style={{x:img4X}} className="horizontal-img-cont1 absolute top-[90px] -right-[30px] hidden lg:block">
                 <Image className="h-[150px] w-[250px] 2xl:h-[238px] 2xl:w-[424px]" src={dog} alt="" />
-              </div>
-
-              <div className="horizontal-img-cont2 hidden lg:block">
-                <Image
-                  className="h-[150px] w-[250px] 2xl:h-[238px] 2xl:w-[424px] absolute bottom-[60px] left-[50px]"
-                  src={manMountain}
-                  alt=""
-                />
-              </div>
-              <div className="horizontal-img-cont3 hidden lg:block">
-                <Image className="h-[150px] w-[250px] 2xl:h-[250px] 2xl:w-[450px]" src={Miami} alt="" />
-              </div>
-              <div className="horizontal-img-cont4 hidden lg:block absolute -top-2 -translate-x-2/4 left-2/4 ">
-                <Image className="h-[150px] w-[250px] 2xl:h-[250px] 2xl:w-[450px]" src={peoples} alt="" />
-              </div>
+              </motion.div>
+              <motion.div style={{x:img1X}} className="horizontal-img-cont2 hidden absolute lg:block bottom-[60px] left-[50px]">
+                  <Image
+                    className="h-[150px] w-[250px] 2xl:h-[238px] 2xl:w-[424px] "
+                    src={manMountain}
+                    alt=""
+                  />
+              </motion.div>
+                <motion.div style={{x:img3X}} className="horizontal-img-cont3 hidden lg:block">
+                  <Image className="h-[150px] w-[250px] 2xl:h-[250px] 2xl:w-[450px]" src={Miami} alt="" />
+                </motion.div>
+              
+                <motion.div style={{x:img2X}} className="horizontal-img-cont4 hidden lg:block absolute -translate-x-2/4 -top-2 left-2/4 ">
+                  <Image className="h-[150px] w-[250px] 2xl:h-[250px] 2xl:w-[450px]" src={peoples} alt="" />
+                </motion.div> 
             </div>
           </div>
           <div className="horizontal-item count-section-2 !w-[100vw] !h-screen relative">
