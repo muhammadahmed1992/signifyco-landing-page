@@ -152,7 +152,7 @@ export default function Home() {
           <div className="flex justify-center">
             <AnimateWhenInViewport
               textToBeAnimated="THAT YOU MUST HAVE SEEN"
-              cssClass="text-center -mt-4 lg:-mt-4 lg:-mt-[55px] mb-10 lg:text-[27.3px] text-[14px] text-black !-tracking-[0px]"
+              cssClass="text-center -mt-7  lg:-mt-4  mb-10 lg:text-[27.3px] text-[14px] text-black !-tracking-[0px]"
               styles={{ fontWeight: "700", lineHeight: "32.52px", fontFamily: "SFProDisplay, sans-serif" }}
             />
           </div>
@@ -228,7 +228,7 @@ export default function Home() {
           <div className="w-full  xl:w-5/12 flex md:flex-col  items-center md:items-start pl-8 md:pl-16">
             <div className="w-5/12 lg:w-full mt-14  xl:mt-72">
               <AnimateWhenInViewport
-                textToBeAnimated=" up-to-date on the"
+                textToBeAnimated="Stay up-to-date on the"
                 cssClass=":w-4/12 w-5/12 md:ml-[2.7rem] lg:ml-3 md:text-[18.28px] text-[9.5px] "
                 styles={{
                   fontWeight: "590",

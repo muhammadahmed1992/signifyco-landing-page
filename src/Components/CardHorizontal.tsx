@@ -34,15 +34,15 @@ const HorizontalScrollCarousel = () => {
 
 const Card = ({ card }: any) => {
   return (
-    <div className="w-[280px] bg-[#DF1780] px-3 py-6 rounded-lg">
-      <div>
+    <div className="w-[250px] bg-[#DF1780] px-3 py-6 rounded-lg border border-black">
+      <div className="ml-3">
         <div className="mt-5">
           <Image className="h-[48px] w-[48px]" src={card.url} alt="" />
         </div>
-        <h4 className="text-[14.31px] font-[1000] leading-[15.77px] tracking-[-0.29px] text-white mt-8">
+        <h4 className="text-[14.31px] font-[1000] leading-[15.77px] tracking-[-0.29px] text-white mt-8 SF-Pro">
           {card.title}
         </h4>
-        <p className="text-[10px] font-[590] leading-[15.47px] -tracking-[0.21px] text-white mt-3">
+        <p className="text-[9.83px] font-[590] leading-[15.47px] -tracking-[0.21px] text-white mt-3 SF-Pro w-[80%]">
           {card.paragraph}
         </p>
       </div>

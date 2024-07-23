@@ -115,13 +115,13 @@ const CardSection = forwardRef<HTMLDivElement>((props, ref) => {
             />
           </div>
           <div
-            className="max-w-[563px] max-h-[433px] hidden lg:block"
+            className="max-w-[536px] max-h-[433px] hidden lg:block"
             style={{ marginTop: "20%", paddingBottom: "20px" }}
           >
             <Image src={Group} alt="" />
           </div>
         </div>
-        <div className="hidden lg:flex w-full justify-end">
+        <div className="hidden lg:flex w-full justify-end xl:mr-10 2xl:mr-0">
           <div
             className="cards-list lg:!flex !flex-row lg:!flex-col !items-center gap-10 lg:gap-5 mr-[90px] !hidden "
             ref={cardsListRef}
@@ -138,7 +138,7 @@ const CardSection = forwardRef<HTMLDivElement>((props, ref) => {
                 </div>
               </div>
               <div className="card-image">
-                <Image className="h-[40px] w-[40px]" src={image1} alt="" />
+                <Image className="h-[71px] w-[71px]" src={image1} alt="" />
               </div>
             </div>
             <div className="cards-item">
@@ -153,7 +153,7 @@ const CardSection = forwardRef<HTMLDivElement>((props, ref) => {
                 </div>
               </div>
               <div className="card-image">
-                <Image className="h-[40px] w-[40px]" src={image2} alt="" />
+                <Image className="w-[62.45px] h-[58.55px]" src={image2} alt="" />
               </div>
             </div>
             <div className="cards-item">
@@ -168,7 +168,7 @@ const CardSection = forwardRef<HTMLDivElement>((props, ref) => {
                 </div>
               </div>
               <div className="card-image">
-                <Image className="h-[40px] w-[40px]" src={image3} alt="" />
+                <Image className="h-[42px] w-[54px]" src={image3} alt="" />
               </div>
             </div>
             <div className="cards-item">
@@ -183,7 +183,7 @@ const CardSection = forwardRef<HTMLDivElement>((props, ref) => {
                 </div>
               </div>
               <div className="card-image">
-                <Image className="h-[40px] w-[40px]" src={image4} alt="" />
+                <Image className="h-[51px] w-[89px]" src={image4} alt="" />
               </div>
             </div>
             <div className="cards-item pr-3">
