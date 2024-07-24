@@ -320,7 +320,6 @@ body {
   justify-content: space-around;
 }
 .card-section-container {
-  max-width: 37.2rem;
   grid-column-gap: 6.25rem;
   grid-row-gap: 1.67rem;
   flex-direction: column;
@@ -470,7 +469,7 @@ body {
   transition: all 0.5s ease-in;
 }
 
-@media (max-width: 1536px) {
+@media (max-width: 1780px) {
   .cards-item {
     width: 475px;
   }
@@ -486,7 +485,7 @@ body {
   width: 520px;
 }
 
-@media (min-width: 1536px) {
+@media (min-width: 1780px) {
   .cards-list {
     width: 475px;
   }
@@ -1024,7 +1023,7 @@ body {
   transition: all 0.5s ease-in;
 }
 
-@media (max-width: 1536px) {
+@media (max-width: 1780px) {
   .card-color-change {
     width: 520px !important;
   }
